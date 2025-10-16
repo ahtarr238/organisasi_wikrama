@@ -166,31 +166,33 @@ class UserController
 
     }
 
-public function loginAuth(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ], [
-        'email.required' => 'Email wajib diisi',
-        'email.email' => 'Format email tidak valid',
-        'password.required' => 'Password harus diisi'
-    ]);
+    public function loginAuth(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ], [
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
+            'password.required' => 'Password harus diisi'
+        ]);
 
-    $credentials = $request->only('email', 'password');
+        $data = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-
-        if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard')->with('success', 'Berhasil login sebagai admin.');
+        if (Auth::attempt($data)) {
+            if (Auth::user()->role == 'admin') {
+                return redirect()->route('admin.dashboard')->with('succes, Berhasil login.');
+            } elseif (Auth::user()->role == 'staff'){
+                return redirect()->route('staff.dashboard')->with('success, Berhasil login.');
+            } else  {
+                return redirect()->back()->with('error', 'gagal!, silahkan coba lagi');
+            }
         }
 
-        return redirect()->route('home')->with('success', 'Berhasil login.');
+        return redirect()->back()
+            ->withInput($request->only('email'))
+            ->with('error', 'Email atau password salah.');
     }
-
-    return redirect()->back()->with('error', 'Gagal login! Pastikan email dan password sesuai.');
-}
 
 public function logout()
 {
