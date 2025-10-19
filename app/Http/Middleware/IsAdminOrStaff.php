@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsStaff
+class IsAdminOrStaff
 {
     /**
      * Handle an incoming request.
@@ -16,14 +16,10 @@ class IsStaff
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role == 'staff') {
+        if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'staff')) {
             return $next($request);
         } else {
-            if (Auth::check()) {
-                return redirect()->route('home');
-            } else {
-                return redirect()->route('login');
-            }
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengunduh file ini.');
         }
     }
 }

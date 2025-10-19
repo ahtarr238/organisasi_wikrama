@@ -4,19 +4,26 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col-12">
-            <h2 class="mb-0">Tambah Program Kerja</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4 mt-3 animate__animated animate__fadeInDown">
+        <div>
+            <h4 class="fw-bold text-primary mb-0"><i class="fas fa-plus-circle me-2"></i>Tambah Program Kerja</h4>
+            <p class="text-muted mb-0">Isi informasi program kerja yang akan dibuat</p>
         </div>
+        <a href="{{ route('staff.program.index') }}" class="btn btn-light animate__animated animate__fadeInRight">
+            <i class="fas fa-arrow-left me-2"></i>Kembali
+        </a>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <form action="{{ route('staff.program.store') }}" method="POST">
+    <div class="card shadow-sm animate__animated animate__fadeInUp">
+        <div class="card-header bg-gradient text-white" style="background: linear-gradient(45deg, var(--info-color), #20c997);">
+            <h5 class="mb-0 fw-bold">Form Program Kerja</h5>
+        </div>
+        <div class="card-body p-4">
+            <form action="{{ route('staff.program.store') }}" method="POST" class="needs-validation" novalidate>
                 @csrf
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Nama Program</label>
+                        <label class="form-label fw-bold">Nama Program</label>
                         <input type="text" class="form-control @error('nama_program') is-invalid @enderror" 
                                name="nama_program" value="{{ old('nama_program') }}" required>
                         @error('nama_program')
@@ -62,12 +69,12 @@
                         @enderror
                     </div>
                 </div>
-                <div class="d-flex justify-content-end gap-2">
-                    <a href="{{ route('staff.program.index') }}" class="btn btn-secondary">
-                        Batal
+                <div class="d-flex justify-content-end gap-2 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                    <a href="{{ route('staff.program.index') }}" class="btn btn-light btn-lg px-4">
+                        <i class="fas fa-times me-2"></i>Batal
                     </a>
-                    <button type="submit" class="btn btn-primary">
-                        Simpan
+                    <button type="submit" class="btn btn-primary btn-lg px-4">
+                        <i class="fas fa-save me-2"></i>Simpan Program
                     </button>
                 </div>
             </form>

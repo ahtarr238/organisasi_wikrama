@@ -3,11 +3,14 @@
 @section('title', 'Anggota yang Dihapus - Organisasi')
 
 @section('content')
-<div class="container-fluid mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Anggota yang Dihapus</h2>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeInDown">
         <div>
-            <a href="{{ route('admin.anggota.index') }}" class="btn btn-secondary me-2">
+            <h4 class="fw-bold text-primary mb-0"><i class="fas fa-trash me-2"></i>Anggota yang Dihapus</h4>
+            <p class="text-muted mb-0">Kelola semua data anggota yang telah dihapus</p>
+        </div>
+        <div>
+            <a href="{{ route('admin.anggota.index') }}" class="btn btn-secondary btn-sm animate__animated animate__fadeInRight">
                 <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Anggota
             </a>
         </div>
@@ -27,11 +30,17 @@
         </div>
     @endif
 
-    <div class="card shadow-2-strong">
-        <div class="card-body">
+    <div class="card shadow-sm animate__animated animate__fadeInUp">
+        <div class="card-header bg-gradient text-white" style="background: linear-gradient(45deg, var(--danger-color), #e53935);">
+            <h5 class="mb-0 fw-bold">Data Anggota yang Dihapus</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="p-3 d-flex justify-content-between align-items-center">
+                <span class="text-muted">Menampilkan {{ count($anggotas ?? []) }} data anggota yang dihapus</span>
+            </div>
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
+                    <thead>
                         <tr>
                             <th>No</th>
                             <th>Foto</th>
@@ -105,5 +114,18 @@
             </div>
         </div>
     </div>
+    
+    @if($anggotas->isEmpty())
+    <div class="card shadow-sm animate__animated animate__fadeIn mt-4">
+        <div class="card-body text-center py-5">
+            <i class="fas fa-inbox fa-4x mb-3 text-muted opacity-75"></i>
+            <h5 class="mb-3">Tidak ada data anggota yang dihapus</h5>
+            <p class="text-muted mb-4">Belum ada anggota yang dihapus. Semua data anggota masih tersimpan dengan baik.</p>
+            <a href="{{ route('admin.anggota.index') }}" class="btn btn-primary">
+                <i class="fas fa-users me-2"></i>Lihat Daftar Anggota
+            </a>
+        </div>
+    </div>
+    @endif
 </div>
 @endsection

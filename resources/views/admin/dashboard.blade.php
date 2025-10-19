@@ -3,37 +3,77 @@
 @section('title', 'Dashboard Admin - Organisasi')
 
 @section('content')
-<div class="container-fluid mt-4">
+<div class="container-fluid py-4">
     <div class="row">
-        <div class="col-md-3 mb-4">
-            <div class="card bg-primary text-white shadow-2-strong">
+        <div class="col-md-3 mb-4 animate__animated animate__fadeInUp">
+            <div class="card shadow-sm h-100" style="background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: white; border-radius: 15px; overflow: hidden;">
                 <div class="card-body">
-                    <h5 class="card-title">Total Anggota</h5>
-                    <h3>{{ $totalAnggota ?? 0 }}</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="mb-0 fw-bold">{{ $totalAnggota ?? 0 }}</h2>
+                            <p class="small mb-0 mt-2">Total Anggota</p>
+                        </div>
+                        <div class="align-self-center bg-white bg-opacity-25 rounded-circle p-3">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress" style="height: 5px; background-color: rgba(255,255,255,0.2);">
+                    <div class="progress-bar bg-white" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 mb-4">
-            <div class="card bg-success text-white shadow-2-strong">
+        <div class="col-md-3 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+            <div class="card shadow-sm h-100" style="background: linear-gradient(45deg, var(--success-color), #20c997); color: white; border-radius: 15px; overflow: hidden;">
                 <div class="card-body">
-                    <h5 class="card-title">Total Kegiatan</h5>
-                    <h3>{{ $totalKegiatan ?? 0 }}</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="mb-0 fw-bold">{{ $totalKegiatan ?? 0 }}</h2>
+                            <p class="small mb-0 mt-2">Total Kegiatan</p>
+                        </div>
+                        <div class="align-self-center bg-white bg-opacity-25 rounded-circle p-3">
+                            <i class="fas fa-calendar-check fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress" style="height: 5px; background-color: rgba(255,255,255,0.2);">
+                    <div class="progress-bar bg-white" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 mb-4">
-            <div class="card bg-warning text-dark shadow-2-strong">
+        <div class="col-md-3 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <div class="card shadow-sm h-100" style="background: linear-gradient(45deg, var(--warning-color), #ff9800); color: white; border-radius: 15px; overflow: hidden;">
                 <div class="card-body">
-                    <h5 class="card-title">Total Galeri</h5>
-                    <h3>{{ $totalGaleri ?? 0 }}</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="mb-0 fw-bold">{{ $totalGaleri ?? 0 }}</h2>
+                            <p class="small mb-0 mt-2">Total Galeri</p>
+                        </div>
+                        <div class="align-self-center bg-white bg-opacity-25 rounded-circle p-3">
+                            <i class="fas fa-image fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress" style="height: 5px; background-color: rgba(255,255,255,0.2);">
+                    <div class="progress-bar bg-white" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 mb-4">
-            <div class="card bg-danger text-white shadow-2-strong">
+        <div class="col-md-3 mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+            <div class="card shadow-sm h-100" style="background: linear-gradient(45deg, var(--danger-color), #c82333); color: white; border-radius: 15px; overflow: hidden;">
                 <div class="card-body">
-                    <h5 class="card-title">Total User</h5>
-                    <h3>{{ $totalUser ?? 0 }}</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="mb-0 fw-bold">{{ $totalUser ?? 0 }}</h2>
+                            <p class="small mb-0 mt-2">Total User</p>
+                        </div>
+                        <div class="align-self-center bg-white bg-opacity-25 rounded-circle p-3">
+                            <i class="fas fa-user fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress" style="height: 5px; background-color: rgba(255,255,255,0.2);">
+                    <div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
@@ -41,9 +81,9 @@
 
 
 
-    <div class="card shadow-2-strong">
-        <div class="card-header bg-light">
-            <h5 class="mb-0">Anggota Aktif</h5>
+    <div class="card shadow-sm animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+        <div class="card-header bg-gradient text-white" style="background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));">
+            <h5 class="mb-0 fw-bold">Anggota Aktif</h5>
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">

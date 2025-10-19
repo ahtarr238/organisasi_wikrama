@@ -4,15 +4,18 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row mb-4">
+    <div class="row mb-4 animate__animated animate__fadeInDown">
         <div class="col-12">
-            <h2 class="mb-0">Edit Program Kerja</h2>
+            <h2 class="mb-0 fw-bold text-primary"><i class="fas fa-edit me-2"></i>Edit Program Kerja</h2>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <form action="{{ route('staff.program.update', $program->id) }}" method="POST">
+    <div class="card shadow-sm animate__animated animate__fadeInUp">
+        <div class="card-header bg-gradient text-white" style="background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));">
+            <h5 class="mb-0 fw-bold">Edit Program Kerja</h5>
+        </div>
+        <div class="card-body p-4">
+            <form action="{{ route('staff.program.update', $program->id) }}" method="POST" class="needs-validation" novalidate>
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -63,12 +66,12 @@
                         @enderror
                     </div>
                 </div>
-                <div class="d-flex justify-content-end gap-2">
-                    <a href="{{ route('staff.program.index') }}" class="btn btn-secondary">
-                        Batal
+                <div class="d-flex justify-content-end gap-2 mt-4 animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+                    <a href="{{ route('staff.program.index') }}" class="btn btn-light btn-lg px-4">
+                        <i class="fas fa-times me-2"></i>Batal
                     </a>
-                    <button type="submit" class="btn btn-primary">
-                        Update
+                    <button type="submit" class="btn btn-primary btn-lg px-4">
+                        <i class="fas fa-save me-2"></i>Update
                     </button>
                 </div>
             </form>

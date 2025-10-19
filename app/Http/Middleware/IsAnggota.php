@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsStaff
+class IsAnggota
 {
     /**
      * Handle an incoming request.
@@ -16,14 +16,10 @@ class IsStaff
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role == 'staff') {
+        if (Auth::check() && Auth::user()->role == 'anggota') {
             return $next($request);
         } else {
-            if (Auth::check()) {
-                return redirect()->route('home');
-            } else {
-                return redirect()->route('login');
-            }
+            return redirect()->route('home');
         }
     }
 }

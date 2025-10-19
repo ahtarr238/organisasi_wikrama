@@ -43,15 +43,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-3 text-black fw-bolder" href="{{ route('schedule') }}">Jadwal Kegiatan</a>
-                        <a class="nav-link mx-3 text-black fw-bolder" href="#">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-3 text-black fw-bolder" href="#">Galeri</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-3 text-black fw-bolder" href="#">Jadwal Kegiatan</a>
-
-                    </li>
                 </ul>
                 <!-- Left links -->
 
@@ -62,7 +53,7 @@
                             @csrf
                             <button type="submit" class="btn btn-outline-danger px-3" data-mdb-ripple-init data-mdb-ripple-color="dark" style="color: #1F3984">Logout</button>
                         </form>
-                    @else
+                    @else   
                         <a href="{{ route('login') }}" class="btn btn-outline-primary px-3 me-2" style="color: #1F3984">Masuk</a>
 
                         <a href="{{ route('sign-up') }}" class="btn  me-3 text-white"

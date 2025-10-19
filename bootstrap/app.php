@@ -15,9 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
 
         $middleware->alias ([
-            'isAdmin' => App\Http\Middleware\isAdmin::class,
-            'isGuest' => App\Http\Middleware\isGuest::class,
-            'isStaff' => App\Http\Middleware\isStaff::class
+            'isAdmin' => App\Http\Middleware\IsAdmin::class,
+            'isGuest' => App\Http\Middleware\IsGuest::class,
+            'isStaff' => App\Http\Middleware\IsStaff::class,
+            'isAnggota' => App\Http\Middleware\IsAnggota::class,
+            'isAdminOrStaff' => App\Http\Middleware\IsAdminOrStaff::class
     ]);
     })
     ->withProviders([

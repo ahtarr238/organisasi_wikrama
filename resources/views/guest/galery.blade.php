@@ -5,91 +5,188 @@ use Illuminate\Support\Facades\Storage;
 @endphp
 
 @section('content')
-<style>
-    .galeri-hero {
-        background: linear-gradient(360deg, #ffffff 0%, #f0f8ff 60%);
-        padding: 60px 0 30px 0;
-    }
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    .galeri-card {
-        border-radius: 14px;
-        overflow: hidden;
-        transition: all 0.35s ease;
-        background-color: #ffffff;
-        box-shadow: 0 6px 20px rgba(31, 45, 61, 0.08);
-    }
+    <style>
+        :root {
+            --primary-color: #1F3984;
+            --secondary-color: #4A6FE3;
+            --accent-color: #FFC107;
+            --light-color: #f0f8ff;
+            --dark-color: #1a1a2e;
+        }
 
-    .galeri-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 30px rgba(31, 45, 61, 0.15);
-    }
+        .galeri-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .galeri-card img {
-        height: 300px;
-        object-fit: cover;
-        width: 100%;
-        transition: transform 0.4s ease;
-    }
+        .galeri-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="40" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.2"/></svg>');
+            background-size: 100px 100px;
+            z-index: 1;
+        }
 
-    .galeri-card:hover img {
-        transform: scale(1.05);
-    }
+        .galeri-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(31, 45, 61, 0.1);
+            height: 100%;
+        }
 
-    .galeri-card .card-body {
-        padding: 20px;
-    }
+        .galeri-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(31, 45, 61, 0.15);
+        }
 
-    .galeri-badge {
-        background-color: #1F3984;
-        font-size: 0.75rem;
-        padding: 6px 12px;
-        border-radius: 20px;
-        color: #fff;
-        letter-spacing: 0.5px;
-    }
+        .galeri-card img {
+            height: 300px;
+            object-fit: cover;
+            width: 100%;
+            transition: transform 0.4s ease;
+        }
 
-    .galeri-empty {
-        color: #6c757d;
-        text-align: center;
-        padding: 80px 0;
-    }
+        .galeri-card:hover img {
+            transform: scale(1.05);
+        }
 
-    .galeri-empty i {
-        color: #1F3984;
-    }
+        .galeri-card .card-body {
+            padding: 20px;
+        }
 
-    .btn-outline-primary {
-        border-color: #1F3984;
-        color: #1F3984;
-    }
+        .galeri-badge {
+            background-color: var(--primary-color);
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
 
-    .btn-outline-primary:hover {
-        background-color: #1F3984;
-        color: #fff;
-    }
+        .galeri-empty {
+            color: #6c757d;
+            text-align: center;
+            padding: 80px 0;
+        }
 
-    .galeri-section {
-        background: linear-gradient(180deg, #f0f8ff 0%, #ffffff 80%);
-        padding-bottom: 60px;
-        padding-top: 20px;
-    }
-</style>
+        .galeri-empty i {
+            color: var(--primary-color);
+            font-size: 4rem;
+        }
+
+        .btn-outline-primary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(31, 57, 132, 0.3);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(31, 57, 132, 0.3);
+        }
+
+        .galeri-section {
+            background: linear-gradient(180deg, var(--light-color) 0%, #ffffff 80%);
+            padding-bottom: 60px;
+            padding-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .galeri-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><circle cx="25" cy="25" r="10" fill="none" stroke="%231F3984" stroke-width="0.5" opacity="0.1"/><circle cx="75" cy="75" r="10" fill="none" stroke="%231F3984" stroke-width="0.5" opacity="0.1"/></svg>');
+            background-size: 100px 100px;
+            z-index: -1;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
 
 <!-- Hero Section -->
 <div class="container-fluid galeri-hero">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div>
-                <h2 class="fw-bold mb-2" style="color: #1F3984;">Galeri Kegiatan</h2>
-                <p class="text-muted mb-0">Kumpulan momen berharga dalam setiap perjalanan organisasi OSIS-MPR Wikrama.</p>
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center">
+            <div class="col-md-8" data-aos="fade-right" data-aos-duration="1000">
+                <h1 class="fw-bold text-white mb-4 section-title">
+                    Galeri Kegiatan
+                    <span class="text-warning">.</span>
+                </h1>
+                <p class="lead text-white-50 mb-4">
+                    Kumpulan momen berharga dalam setiap perjalanan organisasi OSIS-MPR Wikrama.
+                </p>
+                <p class="lead text-white-50">
+                    Dokumentasi kegiatan yang menunjukkan semangat, dedikasi, dan kebersamaan dalam setiap program yang dilaksanakan.
+                </p>
             </div>
-            <div class="mt-3 mt-md-0">
-                <a href="{{ route('galery.export') }}" class="btn btn-success rounded-pill shadow-sm me-2">
-                    <i class="fas fa-download me-1"></i> Export CSV
-                </a>
-                <a href="{{ route('home') }}" class="btn btn-outline-secondary rounded-pill shadow-sm">
-                    <i class="fas fa-home me-1"></i> Kembali ke Beranda
-                </a>
+        </div>
+        <div class="row mt-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+            <div class="col-12">
+                <div class="d-flex flex-wrap align-items-center">
+                    @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'staff'))
+                    <a href="{{ route('galery.export') }}" class="btn btn-light rounded-pill me-3 mb-3">
+                        <i class="fas fa-download me-1"></i> Export CSV
+                    </a>
+                    @endif
+                    <a href="{{ route('home') }}" class="btn btn-outline-light rounded-pill mb-3">
+                        <i class="fas fa-home me-1"></i> Kembali ke Beranda
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -100,48 +197,50 @@ use Illuminate\Support\Facades\Storage;
     <div class="container">
         <div class="row g-4 mt-2">
             @foreach ($galleries as $gallery)
-            <div class="col-md-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="{{ $loop->iteration * 100 }}">
                 <div class="card galeri-card h-100">
-                    @if($gallery->photo_url)
-                        <img src="{{ Storage::url('galery/' . $gallery->photo_url) }}" alt="{{ $gallery->title }}">
-                    @else
-                        <img src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" alt="Placeholder">
-                    @endif
-
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="fw-semibold text-dark">{{ $gallery->title }}</h5>
-                        <p class="text-muted small mb-3">{{ Str::limit($gallery->description, 100) }}</p>
-
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="galeri-badge">{{ strtoupper($gallery->category) }}</span>
-                                <small class="text-muted">{{ $gallery->uploaded_at->format('d M Y H:i') }}</small>
+                    <div class="position-relative overflow-hidden" style="height: 300px;">
+                        @if($gallery->photo_url)
+                            <img src="{{ Storage::url('galery/' . $gallery->photo_url) }}" alt="{{ $gallery->title }}" class="img-fluid w-100" style="object-fit:cover; height:100%;">
+                        @else
+                            <img src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" alt="Placeholder" class="img-fluid w-100" style="object-fit:cover; height:100%;">
+                        @endif
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end"
+                             style="background: linear-gradient(to top, rgba(31,57,132,0.8) 0%, transparent 100%);">
+                            <div class="p-3 text-white w-100">
+                                <h5 class="fw-bold mb-0">{{ $gallery->title }}</h5>
                             </div>
-                            <div class="text-muted small mb-3">
-                                <i class="fas fa-user me-1 text-secondary"></i> {{ $gallery->uploader->name ?? 'Unknown' }}
-                            </div>
-                            <button class="btn btn-sm btn-outline-primary w-100 rounded-pill"
-                                    data-mdb-toggle="modal"
-                                    data-mdb-target="#galleryModal{{ $gallery->id }}">
-                                <i class="fas fa-eye me-1"></i> Lihat Detail
-                            </button>
                         </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted mb-3">{{ Str::limit($gallery->description, 100) }}</p>
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="galeri-badge">{{ strtoupper($gallery->category) }}</span>
+                            <small class="text-muted">{{ $gallery->uploaded_at->format('d M Y H:i') }}</small>
+                        </div>
+                        <div class="text-muted small mb-3">
+                            <i class="fas fa-user me-1 text-secondary"></i> {{ $gallery->uploader->name ?? 'Unknown' }}
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary w-100 rounded-pill" onclick="openGalleryModal{{ $gallery->id }}()">
+                            <i class="fas fa-eye me-1"></i> Lihat Detail
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Modal Detail -->
-            <div class="modal fade" id="galleryModal{{ $gallery->id }}" tabindex="-1" aria-labelledby="galleryModalLabel{{ $gallery->id }}" aria-hidden="true">
+            <div class="modal fade" id="galleryModal{{ $gallery->id }}" tabindex="-1" aria-labelledby="galleryModalLabel{{ $gallery->id }}" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content border-0 shadow-lg">
-                        <div class="modal-header" style="background-color: #1F3984;">
+                        <div class="modal-header" style="background-color: var(--primary-color);">
                             <h5 class="modal-title text-white fw-bold" id="galleryModalLabel{{ $gallery->id }}">
                                 {{ $gallery->title }}
                             </h5>
                             <button type="button" class="btn-close btn-close-white" data-mdb-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="text-center mb-3">
+                            <div class="text-center mb-4">
                                 @if($gallery->photo_url)
                                     <img src="{{ Storage::url('galery/' . $gallery->photo_url) }}" 
                                          class="img-fluid rounded shadow-sm" 
@@ -172,7 +271,7 @@ use Illuminate\Support\Facades\Storage;
             @endforeach
 
             @if($galleries->isEmpty())
-            <div class="col-12 galeri-empty">
+            <div class="col-12 galeri-empty" data-aos="fade-up" data-aos-duration="1000">
                 <i class="fas fa-images fa-3x mb-3"></i>
                 <p class="fs-5">Belum ada galeri yang tersedia.</p>
             </div>
@@ -181,6 +280,20 @@ use Illuminate\Support\Facades\Storage;
     </div>
 </div>
 
-<!-- MDBootstrap JS (jika belum dimasukkan di layout utama) -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+
+    // Functions to open gallery modals
+    @foreach ($galleries as $gallery)
+    function openGalleryModal{{ $gallery->id }}() {
+        const myModal = new mdb.Modal(document.getElementById('galleryModal{{ $gallery->id }}'));
+        myModal.show();
+    }
+    @endforeach
+</script>
 @endsection

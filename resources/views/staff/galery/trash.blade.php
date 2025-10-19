@@ -6,18 +6,18 @@ use Illuminate\Support\Facades\Storage;
 
 @section('content')
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4 mt-3">
-        <h4 class="fw-bold text-primary">Galeri yang Dihapus</h4>
+    <div class="d-flex justify-content-between align-items-center mb-4 mt-3 animate__animated animate__fadeInDown">
+        <h4 class="fw-bold text-primary mb-0"><i class="fas fa-trash-alt me-2"></i>Galeri yang Dihapus</h4>
         <div>
-            <a href="{{route('staff.galery.index')}}" class="btn btn-secondary btn-sm me-2">
+            <a href="{{route('staff.galery.index')}}" class="btn btn-secondary btn-sm me-2 animate__animated animate__fadeInRight">
                 <i class="fas fa-arrow-left me-2"></i>Kembali
             </a>
         </div>
     </div>
 
     @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
+        <div class="alert alert-success alert-dismissible fade show animate__animated animate__fadeInDown" role="alert">
+            <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
             <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif

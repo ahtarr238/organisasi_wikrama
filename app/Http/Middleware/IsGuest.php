@@ -16,10 +16,10 @@ class IsGuest
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() == FALSE) {
+        if (!Auth::check()) {
             return $next($request);
         } else {
-            return redirect()->back();
+            return redirect()->route('home');
         }
     }
 }

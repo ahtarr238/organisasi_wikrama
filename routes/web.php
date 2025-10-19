@@ -9,7 +9,6 @@ use App\Http\Controllers\GaleryController;
 // Home route
 
 
-
 // login and signup
 Route::get('/login', function () {
     return view('guest.login');
@@ -19,30 +18,28 @@ Route::get('/signup', function () {
     return view('guest.signup');
 })->name('sign-up');
 Route::post('/signup', [UserController::class, 'signUp'])->name('sign-up.process');
+Route::get('/', function () {
+    return view('guest.home');
+})->name('home');
 
+// Galery routes
+Route::get('/galery', [GaleryController::class, 'indexGuest'])->name('galery');
+Route::get('/galery/{id}', [GaleryController::class, 'showGuest'])->name('galery.detail');
+Route::middleware(['auth', 'isAdminOrStaff'])->get('/galery/export', [GaleryController::class, 'export'])->name('galery.export');
 
-Route::middleware('guest')->group(function () {
-    Route::get('/', function () {
-        return view('guest.home');
-    })->name('home');
-
-    // Galery routes
-    Route::get('/galery', [GaleryController::class, 'indexGuest'])->name('galery');
-    Route::get('/galery/{id}', [GaleryController::class, 'showGuest'])->name('galery.detail');
-    Route::get('/galery/export', [GaleryController::class, 'export'])->name('galery.export');
-
-    // Schedule routes
-    Route::get('/jadwal-kegiatan', [DailyActivityController::class, 'indexGuest'])->name('schedule');
-    Route::get('/jadwal-kegiatan/{id}', [DailyActivityController::class, 'showGuest'])->name('schedule.detail');
-    Route::get('/jadwal-kegiatan/export', [DailyActivityController::class, 'export'])->name('schedule.export');
-
-
-});
+// Schedule routes
+Route::get('/jadwal-kegiatan', [DailyActivityController::class, 'indexGuest'])->name('schedule');
+Route::get('/jadwal-kegiatan/{id}', [DailyActivityController::class, 'showGuest'])->name('schedule.detail');
+Route::middleware(['auth', 'isAdminOrStaff'])->get('/jadwal-kegiatan/export', [DailyActivityController::class, 'export'])->name('schedule.export');
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
+// Route home untuk pengguna yang sudah login
+Route::middleware(['auth'])->get('/home', function () {
+    return view('guest.home');
+})->name('home.auth');
 
-Route::middleware('isAdmin')->prefix('admin')->group(function () {
+Route::middleware(['auth', 'isAdmin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         // Total anggota
         $totalAnggota = \App\Models\User::count();
@@ -87,7 +84,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function () {
     Route::get('/anggota/export', [\App\Http\Controllers\Admin\AnggotaController::class, 'export'])->name('admin.anggota.export');
     
     // Routes for managing deleted anggota
-    Route::get('/anggota/trash', [\App\Http\Controllers\Admin\AnggotaController::class, 'trash'])->name('admin.anggota.trash');
+    Route::get('anggota.trash', [\App\Http\Controllers\Admin\AnggotaController::class, 'trash'])->name('admin.anggota.trash');
     Route::post('/anggota/restore/{id}', [\App\Http\Controllers\Admin\AnggotaController::class, 'restore'])->name('admin.anggota.restore');
     Route::delete('/anggota/force-delete/{id}', [\App\Http\Controllers\Admin\AnggotaController::class, 'forceDelete'])->name('admin.anggota.forceDelete');
 
@@ -106,7 +103,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function () {
     Route::get('/galery/export', [\App\Http\Controllers\Admin\GaleryController::class, 'export'])->name('admin.galery.export');
     
     // Routes for managing deleted galery
-    Route::get('/galery/trash', [\App\Http\Controllers\Admin\GaleryController::class, 'trash'])->name('admin.galery.trash');
+    Route::get('/galery.trash', [\App\Http\Controllers\Admin\GaleryController::class, 'trash'])->name('admin.galery.trash');
     Route::post('/galery/restore/{id}', [\App\Http\Controllers\Admin\GaleryController::class, 'restore'])->name('admin.galery.restore');
     Route::delete('/galery/force-delete/{id}', [\App\Http\Controllers\Admin\GaleryController::class, 'forceDelete'])->name('admin.galery.forceDelete');
     
@@ -117,7 +114,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function () {
     Route::get('/kegiatan/export', [\App\Http\Controllers\MonitoringController::class, 'kegiatanExport'])->name('admin.kegiatan.export');
     
     // Routes for managing deleted kegiatan
-    Route::get('/kegiatan/trash', [\App\Http\Controllers\MonitoringController::class, 'kegiatanTrash'])->name('admin.kegiatan.trash');
+    Route::get('/kegiatan.trash', [\App\Http\Controllers\MonitoringController::class, 'kegiatanTrash'])->name('admin.kegiatan.trash');
     Route::post('/kegiatan/restore/{id}', [\App\Http\Controllers\MonitoringController::class, 'kegiatanRestore'])->name('admin.kegiatan.restore');
     Route::delete('/kegiatan/force-delete/{id}', [\App\Http\Controllers\MonitoringController::class, 'kegiatanForceDelete'])->name('admin.kegiatan.forceDelete');
     
@@ -127,7 +124,7 @@ Route::middleware('isAdmin')->prefix('admin')->group(function () {
 });
 
 
-Route::middleware('isStaff')->prefix('/staff')->name('staff.')->group(function () {
+Route::middleware(['auth', 'isStaff'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', function () {
         // Total kegiatan
         $totalKegiatan = \App\Models\DailyActivity::count();
@@ -201,5 +198,11 @@ Route::middleware('isStaff')->prefix('/staff')->name('staff.')->group(function (
         Route::delete('/force-delete/{id}', [GaleryController::class, 'forceDelete'])->name('forceDelete');
         Route::get('/export', [GaleryController::class, 'export'])->name('export');
     });
+});
+
+Route::middleware(['auth', 'isAnggota'])->prefix('anggota')->name('anggota.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('anggota.dashboard');
+    })->name('dashboard');
 });
 

@@ -69,45 +69,6 @@
             </div>
         </div>
     </div>
-
-    <div class="card shadow-2-strong">
-        <div class="card-header bg-light">
-            <h5 class="mb-0">Kegiatan yang Diikuti</h5>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th>No</th>
-                            <th>Judul Kegiatan</th>
-                            <th>Tanggal</th>
-                            <th>Deskripsi</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($anggota->dailyActivities ?? [] as $index => $activity)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $activity->judul }}</td>
-                                <td>{{ $activity->tanggal }}</td>
-                                <td>{{ Str::limit($activity->deskripsi, 100) }}</td>
-                                <td>
-                                    <span class="badge bg-{{ $activity->status == 'selesai' ? 'success' : ($activity->status == 'on_going' ? 'warning' : 'secondary') }}">
-                                        {{ ucfirst($activity->status) }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center text-muted py-4">Belum ada kegiatan yang diikuti</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

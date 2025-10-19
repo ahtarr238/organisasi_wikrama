@@ -4,27 +4,36 @@
 @section('title', 'Kelola Anggota - Organisasi')
 
 @section('content')
-<div class="container-fluid mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Daftar Anggota</h2>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeInDown">
         <div>
-            <a href="{{ route('admin.anggota.export') }}" class="btn btn-success me-2">
+            <h4 class="fw-bold text-primary mb-0"><i class="fas fa-users me-2"></i>Daftar Anggota</h4>
+            <p class="text-muted mb-0">Kelola semua data anggota organisasi</p>
+        </div>
+        <div>
+            <a href="{{ route('admin.anggota.export') }}" class="btn btn-success btn-sm me-2 animate__animated animate__fadeInRight">
                 <i class="fas fa-file-excel me-2"></i>Export Excel
             </a>
-            <a href="{{ route('admin.anggota.trash') }}" class="btn btn-info me-2">
-                <i class="fas fa-trash me-2"></i>Data Dihapus
+            <a href="{{ route('admin.anggota.trash') }}" class="btn btn-info btn-sm me-2 animate__animated animate__fadeInRight" style="animation-delay: 0.1s">
+                <i class="fas fa-trash me-2"></i>Trash
             </a>
-            <a href="{{ route('admin.anggota.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.anggota.create') }}" class="btn btn-primary btn-sm animate__animated animate__fadeInRight" style="animation-delay: 0.2s">
                 <i class="fas fa-plus me-2"></i>Tambah Anggota
             </a>
         </div>
     </div>
 
-    <div class="card shadow-2-strong">
-        <div class="card-body">
+    <div class="card shadow-sm animate__animated animate__fadeInUp">
+        <div class="card-header bg-gradient text-white" style="background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));">
+            <h5 class="mb-0 fw-bold">Data Anggota</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="p-3 d-flex justify-content-between align-items-center">
+                <span class="text-muted">Menampilkan {{ count($anggotas ?? []) }} data anggota</span>
+            </div>
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
+                    <thead>
                         <tr>
                             <th>No</th>
                             <th>Foto</th>
@@ -60,13 +69,13 @@
                                 <td>{{ $anggota->join_date ? $anggota->join_date->format('d M Y') : '-' }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('admin.anggota.show', $anggota->id) }}" class="btn btn-sm btn-info" title="Detail">
+                                        <a href="{{ route('admin.anggota.show', $anggota->id) }}" class="btn btn-sm btn-outline-info" title="Detail">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('admin.anggota.edit', $anggota->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                                        <a href="{{ route('admin.anggota.edit', $anggota->id) }}" class="btn btn-sm btn-outline-warning" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <button type="button" class="btn btn-sm btn-danger" title="Hapus" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $anggota->id }}">
+                                        <button type="button" class="btn btn-sm btn-outline-danger" title="Hapus" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $anggota->id }}">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>

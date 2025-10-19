@@ -15,7 +15,12 @@ class WorkProgram extends Model
         'deskripsi',
         'tgl_mulai',
         'tgl_selesai',
-        'created_by'
+        'created_by',
+        'status'
+    ];
+
+    protected $attributes = [
+        'status' => 'on_going'
     ];
 
     protected $dates = [

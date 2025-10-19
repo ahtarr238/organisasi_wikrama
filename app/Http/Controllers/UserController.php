@@ -54,18 +54,18 @@ class UserController
      */
     public function update(Request $request, $id)
     {
-                $request->validate(
+        $request->validate(
             [
                 // wajib diisi min/minimal karakter
                 'first_name' => 'required|min:3',
                 'last_name' => 'required|min:3',
                 // dns emailnya valid,@gmail.com,@company.com, dll
-                'email' => 'required|email:dns',
-                'password' => 'required|min:8',
+                'email' => 'required|email',
+                'password' => 'required|min:8|confirmed',
                 'gender' => 'required|in:Laki-laki,Perempuan',
-                'birth_date' => 'required|date|before:today',
-                'phone_number' => 'required|min:10',
-                'address' => 'required|min:15',
+                'birth_date' => 'required|date|before:-15 years',
+                'phone_number' => 'required|numeric|min:10',
+                'address' => 'required|min:10',
             ],
             [
                 'first_name.required' => 'Nama depan wajib diisi',
@@ -82,7 +82,7 @@ class UserController
                 'phone_number.required' => 'Nomor telepon anda wajib diisi ',
                 'phone_number.min' => 'Nomor telepon wajib diisi minimal 10 angka',
                 'address.required' => 'Alamat anda wajib diisi',
-                'address.min' => 'Alamat anda wajib diisi minimal 15 huruf'
+                'address.min' => 'Alamat anda wajib diisi minimal 10 huruf'
             ]
         );
 
@@ -118,21 +118,18 @@ class UserController
         $request->validate(
             [
                 // wajib diisi min/minimal karakter
-                'first_name' => 'required|min:3',
-                'last_name' => 'required|min:3',
+                'name' => 'required|min:3',
                 // dns emailnya valid,@gmail.com,@company.com, dll
-                'email' => 'required|email:dns',
-                'password' => 'required|min:8',
+                'email' => 'required|email',
+                'password' => 'required|min:8|confirmed',
                 'gender' => 'required|in:Laki-laki,Perempuan',
-                'birth_date' => 'required|date|before:today',
-                'phone_number' => 'required|min:10',
-                'address' => 'required|min:15',
+                'birth_date' => 'required|date|before:-15 years',
+                'address' => 'required|min:10',
+                'join_date' => 'required|date',
             ],
             [
-                'first_name.required' => 'Nama depan wajib diisi',
-                'first_name.min' => 'Nama depan wajib diisi minimal 3 Huruf',
-                'last_name.required' => 'Nama belakang wajib diisi',
-                'last_name.min' => 'Nama belakang wajib diisi minimal 3 Huruf',
+                'name.required' => 'Nama lengkap wajib diisi',
+                'name.min' => 'Nama lengkap wajib diisi minimal 3 Huruf',
                 'email.required' => 'Email wajib diisi',
                 'email.email' => 'Email wajib diisi dengan data yang valid',
                 'password.required' => 'Password wajib diisi',
@@ -140,30 +137,36 @@ class UserController
                 'gender.required' => 'Jenis kelamin wajib diisi',
                 'birth_date.required' => 'Tanggal lahir anda wajib diisi',
                 'birth_date.before' => 'Anda harus berusia minimal 15 tahun',
-                'phone_number.required' => 'Nomor telepon anda wajib diisi ',
-                'phone_number.min' => 'Nomor telepon wajib diisi minimal 10 angka',
                 'address.required' => 'Alamat anda wajib diisi',
-                'address.min' => 'Alamat anda wajib diisi minimal 15 huruf'
+                'address.min' => 'Alamat anda wajib diisi minimal 10 huruf',
+                'join_date.required' => 'Tanggal bergabung wajib diisi',
             ]
         );
 
+        // Konversi gender ke format singkat
+        $genderValue = $request->gender == 'Laki-laki' ? 'L' : 'P';
+
+        // Menggunakan role yang sesuai dengan struktur database
+        $roleValue = 'user'; // default role yang sesuai dengan struktur database
+
         $CreateUser = User::create([
-            'name'     => $request->first_name . ' ' . $request->last_name,
+            'name'     => $request->name,
             'email'    => $request->email,
-            'gender'   => $request->gender,
-            'birth_date' => $request->birth_date, // kalau sudah di validasi dan ingin simpan
+            'gender'   => $genderValue,
+            'birth_date' => $request->birth_date,
+            'address' => $request->address,
+            'join_date' => $request->join_date,
             'password' => Hash::make($request->password),
-            'role'     => 'anggota', // default role
+            'role'     => $roleValue, // default role yang lebih singkat
         ]);
         if ($CreateUser) {
             // redirect memindahkan halaman , route():name routing yg di tuju
             // with mengirimkan session biasanya untuk modifikasi
-            return redirect()->route('login')->with('success!', 'silahkan login');
+            return redirect()->route('login')->with('success', 'Silahkan login dengan akun yang telah dibuat');
         } else {
             // back kembali ke halaman sebelumnya
-            return redirect()->back()->with('error', 'gagal!, silahkan coba lagi');
+            return redirect()->back()->with('error', 'Gagal mendaftar, silahkan coba lagi');
         }
-
     }
 
     public function loginAuth(Request $request)
@@ -177,15 +180,18 @@ class UserController
             'password.required' => 'Password harus diisi'
         ]);
 
-        $data = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
+        $remember = $request->has('remember');
 
-        if (Auth::attempt($data)) {
+        if (Auth::attempt($credentials, $remember)) {
             if (Auth::user()->role == 'admin') {
-                return redirect()->route('admin.dashboard')->with('succes, Berhasil login.');
-            } elseif (Auth::user()->role == 'staff'){
-                return redirect()->route('staff.dashboard')->with('success, Berhasil login.');
-            } else  {
-                return redirect()->back()->with('error', 'gagal!, silahkan coba lagi');
+                return redirect()->route('admin.dashboard')->with('success', 'Berhasil login.');
+            } elseif (Auth::user()->role == 'staff') {
+                return redirect()->route('staff.dashboard')->with('success', 'Berhasil login.');
+            } elseif (Auth::user()->role == 'user') {
+                return redirect()->route('home.auth')->with('success', 'Berhasil login.');
+            } else {
+                return redirect()->back()->with('error', 'Role tidak dikenali, silahkan hubungi admin.');
             }
         }
 
@@ -195,36 +201,9 @@ class UserController
     }
 
 
-public function loginAuth(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ], [
-        'email.required' => 'Email wajib diisi',
-        'email.email' => 'Format email tidak valid',
-        'password.required' => 'Password harus diisi'
-    ]);
-
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-
-        if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard')->with('success', 'Berhasil login sebagai admin.');
-        }
-
-        return redirect()->route('home')->with('success', 'Berhasil login.');
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('home')->with('success', 'Berhasil logout! Silakan login kembali untuk akses lengkap.');
     }
-
-    return redirect()->back()->with('error', 'Gagal login! Pastikan email dan password sesuai.');
-}
-
-
-public function logout()
-{
-    Auth::logout();
-    return redirect()->route('home')->with('success', 'Berhasil logout! Silakan login kembali untuk akses lengkap.');
-}
 }

@@ -22,6 +22,10 @@ class DailyActivity extends Model
         'organization_id'
     ];
 
+    protected $attributes = [
+        'status' => 'on_going'
+    ];
+
     protected $casts = [
         'date' => 'datetime'
     ];

@@ -10,6 +10,12 @@
         .misi-card {
             border-radius: 14px;
             box-shadow: 0 6px 20px rgba(31, 45, 61, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .misi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(31, 45, 61, 0.15);
         }
 
         .misi-icon {
@@ -20,56 +26,164 @@
             justify-content: center;
             border-radius: 12px;
             font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .misi-card:hover .misi-icon {
+            transform: scale(1.1);
+        }
+
+        /* Animasi untuk fade-in */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Animasi untuk card team */
+        .team-card {
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-card img {
+            transition: all 0.5s ease;
+        }
+
+        .team-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Animasi untuk hero section */
+        .hero-image {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Styling untuk tombol */
+        .btn-primary {
+            background-color: #1F3984;
+            border-color: #1F3984;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            background-color: #152a6e;
+            border-color: #152a6e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(31, 57, 132, 0.3);
+        }
+
+        .btn-rounded {
+            border-radius: 50px;
+            padding: 10px 25px;
+        }
+
+        /* Efek untuk section history */
+        .history-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .history-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231F3984' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+        }
+
+        .history-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Stagger animation untuk team cards */
+        .team-card {
+            opacity: 0;
+        }
+
+        .animate-card {
+            animation: fadeInUp 0.6s ease forwards;
         }
     </style>
+
     <!-- Hero Section -->
-    <div class="container-fluid py-5 ">
+    <div class="container-fluid py-5">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-6">
+                <div class="col-md-6 fade-in">
                     <div class="d-flex align-items-center mb-4">
-                        <img src="{{ asset('images/wikrama-logo.png') }}" alt="Logo 1" height="60">
+                        <img src="{{ asset('images/wikrama-logo.png') }}" alt="Logo 1" height="60" class="me-3">
                         <img src="{{ asset('images/osis-logo.png') }}" alt="Logo 2" height="60" class="ms-3">
                     </div>
-                    <h1 class="fw-bold" style="color: #1F3984">OSIS: Dari Masa ke Masa</h1>
-                    <p class="lead">Dengan semangat baru setiap tahunnya, OSIS menjadi motor penggerak berbagai kegiatan
+                    <h1 class="fw-bold mb-4" style="color: #1F3984">OSIS: Dari Masa ke Masa</h1>
+                    <p class="lead mb-4">Dengan semangat baru setiap tahunnya, OSIS menjadi motor penggerak berbagai kegiatan
                         sekolah. Mulai dari kegiatan akademis, kepemimpinan, sosial, serta hingga keagamaan. Perjalanan OSIS
                         dari masa ke masa adalah bukti nyata bahwa kebersamaan dan keberagaman akan selalu hidup di SMK
                         Wikrama kota Bogor.</p>
-                        @if (Auth::check())
+                    @if (Auth::check())
+                        <div class="mb-4">
                             <span class="fw-bold text-black me-3">Selamat datang '{{ Auth::user()->name }}'</span> <br>
-                            {{-- <span class=" text-black me-3">{{ Auth::user()->birth_date }}</span>  nanti ganti jadi age, sekbid/mpr apa dan di form juga ganti --}}
-                        @else
-                            <a href="{{ route('sign-up') }}"class="btn btn-primary px-4" style="background-color: #1F3984">Daftar</a>
-                        @endif
-
+                        </div>
+                    @else
+                        <a href="{{ route('sign-up') }}" class="btn btn-primary px-4 py-2 btn-rounded">Daftar</a>
+                    @endif
                 </div>
-                <div class="col-md-6 ">
-                    <img src="{{ asset('images/learning.png') }}" alt="OSIS Activities" class="img-fluid rounded-8 shadow"
-                        i>
+                <div class="col-md-6 fade-in">
+                    <img src="{{ asset('images/learning.png') }}" alt="OSIS Activities" class="img-fluid rounded-4 shadow hero-image">
                 </div>
             </div>
         </div>
     </div>
 
     <!-- History Section -->
-    <div class="container-fluid py-5 " style="background-color: #d8ddef">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
+    <div class="container-fluid py-5 history-section" style="background-color: #d8ddef">
+        <div class="container history-content">
+            <div class="row align-items-center">
+                <div class="col-md-6 fade-in">
                     <img src="{{ asset('images/lapangaan.png') }}" alt="SMK Wikrama Building"
-                        class="img-fluid rounded-8 shadow">
+                        class="img-fluid rounded-4 shadow">
                 </div>
-
-                <div class="col-md-6">
+                <div class="col-md-6 fade-in">
                     <h2 class="fw-bold mb-4" style="color: #1F3984">Sejarah OSIS SMK Wikrama Bogor</h2>
-                    <p class="text-justify">
+                    <p class="mb-3">
                         Sejak awal dibentuk, OSIS SMK Wikrama menjadi motor penggerak berbagai kegiatan sekolah, mulai dari
                         kegiatan akademis, kepemimpinan, sosial, serta hingga keagamaan. Untuk mendukungkan program yang
                         berkualitas, setiap calon pengurus diwajibkan mengikuti mekanisme rekrutmen pengurus (LDKS) sebagai
                         proses pembentukan mental, kepribadian, dan jiwa kepemimpinan.
                     </p>
-                    <p class="text-justify mt-3">
+                    <p>
                         Hingga kini, OSIS SMK Wikrama Kota Bogor terus menjadi wadah pembinaan karakter dan kepemimpinan
                         siswa.
                         Setiap periode kepegurusan menghasilkan generasi baru yang siap melanjutkan semangat kepemimpinan,
@@ -80,9 +194,10 @@
         </div>
     </div>
 
-    <section id="team" class="container py-3 px-4">
-        <div class="text-center mb-4">
-            <h4 class="fw-bold" style="color:var(--primary)">Daftar Pengurus</h4>
+    <!-- Team Section -->
+    <section id="team" class="container py-5 px-4">
+        <div class="text-center mb-5 fade-in">
+            <h4 class="fw-bold mb-3" style="color:var(--primary)">Daftar Pengurus</h4>
             <p class="text-muted">Tim yang menjalankan kegiatan dan program OSIS</p>
         </div>
 
@@ -182,9 +297,9 @@
                 ];
             @endphp
 
-            @foreach ($bidang as $p)
+            @foreach ($bidang as $index => $p)
                 <div class="col-12 col-sm-6 col-md-4">
-                    <div class="card h-100 shadow-sm border-0" style="background-color: #d8ddef">
+                    <div class="card h-100 shadow-sm border-0 team-card" style="background-color: #d8ddef" data-delay="{{ $index * 100 }}">
                         <div style="height:500px;overflow:hidden;">
                             <img src="{{ asset('images/' . $p['img']) }}" alt="{{ $p['name'] }}" class="img-fluid w-100"
                                 style="object-fit:cover; height:100%;">
@@ -198,20 +313,22 @@
             @endforeach
         </div>
     </section>
+
+    <!-- Misi Section -->
     <section class="misi-section mt-4">
         <div class="container">
             <div class="row mb-4">
-                <div class="col-md-8">
+                <div class="col-md-8 fade-in">
                     <h2 class="fw-bold">Misi Bakti OSIS MPR</h2>
                     <p class="text-muted">Bergerak nyata untuk lingkungan sekolah, solidaritas antar siswa, dan peningkatan
                         kualitas kegiatan organisasi melalui aksi terpadu.</p>
                 </div>
-                <div class="col-md-4 d-flex align-items-center justify-content-md-end">
+                <div class="col-md-4 d-flex align-items-center justify-content-md-end fade-in">
                     <button class="btn btn-primary btn-rounded">Gabung Tim Bakti</button>
                 </div>
             </div>
             <div class="row g-4">
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-3 fade-in">
                     <div class="card p-3 misi-card h-100">
                         <div class="d-flex align-items-start gap-3">
                             <div class="misi-icon bg-primary text-white px-2 ">
@@ -225,7 +342,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-3 fade-in">
                     <div class="card p-3 misi-card h-100">
                         <div class="d-flex align-items-start gap-3">
                             <div class="misi-icon bg-success text-white px-2">
@@ -239,7 +356,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-3 fade-in">
                     <div class="card p-3 misi-card h-100">
                         <div class="d-flex align-items-start gap-3">
                             <div class="misi-icon bg-warning text-white px-2">
@@ -253,7 +370,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-3 fade-in">
                     <div class="card p-3 misi-card h-100">
                         <div class="d-flex align-items-start gap-3">
                             <div class="misi-icon bg-danger text-white px-2">
@@ -269,10 +386,53 @@
                 </div>
             </div>
             <div class="row mt-4">
-                <div class="col-12 text-center">
-                    <a class="btn btn-outline-primary btn-lg btn-rounded" href="#">Lihat Jadwal Tugas </a>
+                <div class="col-12 text-center fade-in">
+                    <a class="btn btn-outline-primary btn-lg btn-rounded" href="#">Lihat Jadwal Tugas</a>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animasi untuk fade-in elements
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => {
+                el.style.opacity = '0';
+            });
+
+            // Intersection Observer untuk animasi saat scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // Animasi untuk team cards dengan delay bertahap
+            const teamCards = document.querySelectorAll('.team-card');
+            teamCards.forEach(card => {
+                const delay = card.getAttribute('data-delay');
+                observer.observe(card);
+                
+                // Set timeout untuk animasi bertahap
+                setTimeout(() => {
+                    if (card.getBoundingClientRect().top < window.innerHeight) {
+                        card.classList.add('animate-card');
+                    }
+                }, parseInt(delay));
+            });
+        });
+    </script>
 @endsection

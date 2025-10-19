@@ -5,87 +5,207 @@ use Illuminate\Support\Str;
 @endphp
 
 @section('content')
-<style>
-    .jadwal-hero {
-        background: linear-gradient(360deg, #ffffff 0%, #f0f8ff 60%);
-        padding: 60px 0 30px 0;
-    }
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    .jadwal-section {
-        background: linear-gradient(180deg, #f0f8ff 0%, #ffffff 80%);
-        padding-bottom: 60px;
-        padding-top: 20px;
-    }
+    <style>
+        :root {
+            --primary-color: #1F3984;
+            --secondary-color: #4A6FE3;
+            --accent-color: #FFC107;
+            --light-color: #f0f8ff;
+            --dark-color: #1a1a2e;
+        }
 
-    .table thead th {
-        background-color: #1F3984;
-        color: #fff;
-        border-bottom: none;
-    }
+        .jadwal-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .table-hover tbody tr:hover {
-        background-color: rgba(31, 57, 132, 0.05);
-    }
+        .jadwal-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="40" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.2"/></svg>');
+            background-size: 100px 100px;
+            z-index: 1;
+        }
 
-    .jadwal-badge {
-        font-size: 0.75rem;
-        padding: 4px 10px;
-        border-radius: 12px;
-        color: #fff;
-    }
+        .jadwal-section {
+            background: linear-gradient(180deg, var(--light-color) 0%, #ffffff 80%);
+            padding-bottom: 60px;
+            padding-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .badge-on_going {
-        background-color: #ffc107;
-    }
+        .jadwal-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%231F3984" stroke-width="0.5" opacity="0.1"/></svg>');
+            background-size: 100px 100px;
+            z-index: -1;
+        }
 
-    .badge-completed {
-        background-color: #28a745;
-    }
+        .table thead th {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-bottom: none;
+        }
 
-    .badge-cancelled {
-        background-color: #dc3545;
-    }
+        .table-hover tbody tr:hover {
+            background-color: rgba(31, 57, 132, 0.05);
+        }
 
-    .jadwal-empty {
-        color: #6c757d;
-        text-align: center;
-        padding: 80px 0;
-    }
+        .jadwal-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: #fff;
+        }
 
-    .jadwal-empty i {
-        color: #1F3984;
-    }
+        .badge-on_going {
+            background-color: var(--accent-color);
+        }
 
-    .btn-outline-primary {
-        border-color: #1F3984;
-        color: #1F3984;
-    }
+        .badge-completed {
+            background-color: #28a745;
+        }
 
-    .btn-outline-primary:hover {
-        background-color: #1F3984;
-        color: #fff;
-    }
+        .badge-cancelled {
+            background-color: #dc3545;
+        }
 
-    .modal-header {
-        background-color: #1F3984;
-    }
-</style>
+        .jadwal-empty {
+            color: #6c757d;
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .jadwal-empty i {
+            color: var(--primary-color);
+            font-size: 4rem;
+        }
+
+        .btn-outline-primary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(31, 57, 132, 0.3);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(31, 57, 132, 0.3);
+        }
+
+        .card {
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(31, 45, 61, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(31, 45, 61, 0.15);
+        }
+
+        .modal-header {
+            background-color: var(--primary-color);
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Fix for modal z-index and backdrop */
+        .modal {
+            z-index: 1055;
+        }
+
+        .modal-backdrop {
+            z-index: 1050;
+        }
+
+        .modal-content {
+            z-index: 1060;
+        }
+    </style>
 
 <!-- Hero Section -->
 <div class="container-fluid jadwal-hero">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <div>
-                <h2 class="fw-bold mb-2" style="color: #1F3984;">Jadwal Kegiatan</h2>
-                <p class="text-muted mb-0">Informasi lengkap mengenai jadwal kegiatan organisasi OSIS-MPR Wikrama.</p>
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center">
+            <div class="col-md-8" data-aos="fade-right" data-aos-duration="1000">
+                <h1 class="fw-bold text-white mb-4 section-title">
+                    Jadwal Kegiatan
+                    <span class="text-warning">.</span>
+                </h1>
+                <p class="lead text-white-50 mb-4">
+                    Informasi lengkap mengenai jadwal kegiatan organisasi OSIS-MPR Wikrama.
+                </p>
+                <p class="lead text-white-50">
+                    Tetap update dengan semua kegiatan dan acara yang akan datang. Jadwal yang terstruktur untuk memastikan semua program berjalan dengan lancar.
+                </p>
             </div>
-            <div class="mt-3 mt-md-0">
-                <a href="{{ route('schedule.export') }}" class="btn btn-success rounded-pill shadow-sm me-2">
-                    <i class="fas fa-download me-1"></i> Export CSV
-                </a>
-                <a href="{{ route('home') }}" class="btn btn-outline-secondary rounded-pill shadow-sm">
-                    <i class="fas fa-home me-1"></i> Kembali ke Beranda
-                </a>
+        </div>
+        <div class="row mt-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+            <div class="col-12">
+                <div class="d-flex flex-wrap align-items-center">
+                    @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'staff'))
+                    <a href="{{ route('schedule.export') }}" class="btn btn-light rounded-pill me-3 mb-3">
+                        <i class="fas fa-download me-1"></i> Export CSV
+                    </a>
+                    @endif
+                    <a href="{{ route('home') }}" class="btn btn-outline-light rounded-pill mb-3">
+                        <i class="fas fa-home me-1"></i> Kembali ke Beranda
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -94,7 +214,7 @@ use Illuminate\Support\Str;
 <!-- Schedule Section -->
 <div class="container-fluid jadwal-section">
     <div class="container">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm" data-aos="fade-up" data-aos-duration="1000">
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -111,7 +231,7 @@ use Illuminate\Support\Str;
                         </thead>
                         <tbody>
                             @foreach ($events as $index => $event)
-                            <tr>
+                            <tr data-aos="fade-up" data-aos-duration="800" data-aos-delay="{{ $loop->iteration * 100 }}">
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $event->date->format('d M Y') }}</td>
                                 <td>{{ $event->title }}</td>
@@ -127,105 +247,19 @@ use Illuminate\Support\Str;
                                 </td>
                                 <td>{{ $event->user->name ?? 'Unknown' }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary"
-                                            data-mdb-toggle="modal"
-                                            data-mdb-target="#scheduleModal{{ $event->id }}">
+                                    <a href="{{ route('schedule.detail', $event->id) }}" class="btn btn-sm btn-outline-primary rounded-pill">
                                         <i class="fas fa-eye"></i> Detail
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
 
-                            <!-- Modal Detail -->
-                            <div class="modal fade" id="scheduleModal{{ $event->id }}" tabindex="-1" aria-labelledby="scheduleModalLabel{{ $event->id }}" aria-hidden="true">
-                                <div class="modal-dialog modal-lg modal-dialog-centered">
-                                    <div class="modal-content border-0 shadow-lg">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title text-white fw-bold" id="scheduleModalLabel{{ $event->id }}">
-                                                {{ $event->title }}
-                                            </h5>
-                                            <button type="button" class="btn-close btn-close-white" data-mdb-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row mb-4">
-                                                <div class="col-md-6">
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <i class="far fa-calendar text-primary me-2"></i>
-                                                        <div>
-                                                            <div class="text-muted small">Tanggal</div>
-                                                            <div class="fw-semibold">{{ $event->date->format('d F Y') }}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <i class="far fa-clock text-primary me-2"></i>
-                                                        <div>
-                                                            <div class="text-muted small">Waktu</div>
-                                                            <div class="fw-semibold">{{ $event->start_time }} - {{ $event->end_time }}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <div class="mb-4">
-                                                <h6 class="fw-semibold mb-2">Deskripsi Kegiatan</h6>
-                                                <p class="text-muted">{{ $event->description }}</p>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <i class="fas fa-info-circle text-primary me-2"></i>
-                                                        <div>
-                                                            <div class="text-muted small">Status</div>
-                                                            <div>
-                                                                @if($event->status == 'on_going')
-                                                                    <span class="jadwal-badge badge-on_going">Berlangsung</span>
-                                                                @elseif($event->status == 'completed')
-                                                                    <span class="jadwal-badge badge-completed">Selesai</span>
-                                                                @elseif($event->status == 'cancelled')
-                                                                    <span class="jadwal-badge badge-cancelled">Dibatalkan</span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <i class="fas fa-user text-primary me-2"></i>
-                                                        <div>
-                                                            <div class="text-muted small">Penanggung Jawab</div>
-                                                            <div class="fw-semibold">{{ $event->user->name ?? 'Unknown' }}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="mt-3 pt-3 border-top">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <small class="text-muted">
-                                                        <i class="far fa-calendar-plus me-1"></i> Dibuat pada {{ $event->created_at->format('d M Y H:i') }}
-                                                    </small>
-                                                    @if($event->updated_at->diffInHours($event->created_at) > 0)
-                                                        <small class="text-muted">
-                                                            <i class="far fa-edit me-1"></i> Diupdate pada {{ $event->updated_at->format('d M Y H:i') }}
-                                                        </small>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary rounded-pill" data-mdb-dismiss="modal">Tutup</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             @endforeach
 
                             @if($events->isEmpty())
                             <tr>
                                 <td colspan="7" class="text-center text-muted">
-                                    <div class="jadwal-empty">
+                                    <div class="jadwal-empty" data-aos="fade-up" data-aos-duration="1000">
                                         <i class="fas fa-calendar-alt fa-3x mb-3"></i>
                                         <p>Belum ada jadwal kegiatan yang tersedia.</p>
                                     </div>
@@ -240,6 +274,14 @@ use Illuminate\Support\Str;
     </div>
 </div>
 
-<!-- MDBootstrap JS (jika belum dimasukkan di layout utama) -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+
+
+</script>
 @endsection
