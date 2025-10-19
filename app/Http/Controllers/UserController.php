@@ -194,6 +194,34 @@ class UserController
             ->with('error', 'Email atau password salah.');
     }
 
+
+public function loginAuth(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ], [
+        'email.required' => 'Email wajib diisi',
+        'email.email' => 'Format email tidak valid',
+        'password.required' => 'Password harus diisi'
+    ]);
+
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard')->with('success', 'Berhasil login sebagai admin.');
+        }
+
+        return redirect()->route('home')->with('success', 'Berhasil login.');
+    }
+
+    return redirect()->back()->with('error', 'Gagal login! Pastikan email dan password sesuai.');
+}
+
+
 public function logout()
 {
     Auth::logout();

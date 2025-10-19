@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,6 +15,12 @@ class User extends Authenticatable
 {
     use  HasFactory, Notifiable, SoftDeletes;
 
+
+
+class User extends Authenticatable
+{
+    use Notifiable;
+
     protected $fillable = [
         'name',
         'email',
@@ -21,16 +28,19 @@ class User extends Authenticatable
         'gender',
         'birth_date',
         'address',
+
         'organization_id',
         'role_id',
         'role',
         'join_date',
+
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
 
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -89,3 +99,14 @@ class User extends Authenticatable
     //     return $query->where('role', $role);
     // }
 }
+
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+}
+

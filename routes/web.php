@@ -202,3 +202,4 @@ Route::middleware('isStaff')->prefix('/staff')->name('staff.')->group(function (
         Route::get('/export', [GaleryController::class, 'export'])->name('export');
     });
 });
+
