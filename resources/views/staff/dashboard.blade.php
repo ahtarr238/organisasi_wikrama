@@ -68,7 +68,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6 mb-4">
+        <div class="col-md-12 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-light border-0">
                     <h5 class="mb-0">Daftar Kegiatan Terbaru</h5>
@@ -113,7 +113,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-4">
+        <div class="col-md-12 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-light border-0">
                     <h5 class="mb-0">Program Kerja Terbaru</h5>

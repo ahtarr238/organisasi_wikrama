@@ -10,25 +10,37 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::insert([
+        // Create or update admin user
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Administrator',
-                'email' => 'admin@gmail.com',
                 'email_verified_at' => now(),
                 'role' => 'admin',
                 'password' => Hash::make('admin123'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            ]
+        );
+
+        // Create or update Ketua OSIS user
+        User::updateOrCreate(
+            ['email' => 'osis@gmail.com'],
             [
                 'name' => 'Ketua OSIS',
-                'email' => 'osis@gmail.com',
                 'email_verified_at' => now(),
                 'role' => 'staff',
                 'password' => Hash::make('osis123'),
-                'created_at' => now(),
-                'updated_at' => now(),
             ]
-        ]);
+        );
+
+        // Create or update Wakil Ketua OSIS user
+        User::updateOrCreate(
+            ['email' => 'waosis@gmail.com'],
+            [
+                'name' => 'Wakil Ketua OSIS',
+                'email_verified_at' => now(),
+                'role' => 'staff',
+                'password' => Hash::make('waosis123'),
+            ]
+        );
     }
 }

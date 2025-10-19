@@ -1,0 +1,46 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
+class UserSeeder extends Seeder
+{
+    public function run(): void
+    {
+        // Create or update admin user
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Administrator',
+                'email_verified_at' => now(),
+                'role' => 'admin',
+                'password' => Hash::make('admin123'),
+            ]
+        );
+
+        // Create or update Ketua OSIS user
+        User::updateOrCreate(
+            ['email' => 'osis@gmail.com'],
+            [
+                'name' => 'Ketua OSIS',
+                'email_verified_at' => now(),
+                'role' => 'staff',
+                'password' => Hash::make('osis123'),
+            ]
+        );
+
+        // Create or update Wakil Ketua OSIS user
+        User::updateOrCreate(
+            ['email' => 'waosis@gmail.com'],
+            [
+                'name' => 'Wakil Ketua OSIS',
+                'email_verified_at' => now(),
+                'role' => 'staff',
+                'password' => Hash::make('waosis123'),
+            ]
+        );
+    }
+}

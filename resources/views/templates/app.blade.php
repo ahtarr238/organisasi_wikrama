@@ -36,13 +36,13 @@
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link mx-3 text-black fw-bolder" href="#">Beranda</a>
+                        <a class="nav-link mx-3 text-black fw-bolder" href="{{ route('home')}}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-3 text-black fw-bolder" href="#">Galeri</a>
+                        <a class="nav-link mx-3 text-black fw-bolder" href="{{ route('galery') }}">Galeri</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-3 text-black fw-bolder" href="#">Jadwal Kegiatan</a>
+                        <a class="nav-link mx-3 text-black fw-bolder" href="{{ route('schedule') }}">Jadwal Kegiatan</a>
                     </li>
                 </ul>
                 <!-- Left links -->

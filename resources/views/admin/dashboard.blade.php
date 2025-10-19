@@ -39,41 +39,7 @@
         </div>
     </div>
 
-    <div class="card shadow-2-strong mb-4">
-        <div class="card-header bg-light">
-            <h5 class="mb-0">Kegiatan Terbaru</h5>
-        </div>
-        <div class="card-body">
-            <table class="table align-middle mb-0 bg-white">
-                <thead class="bg-light">
-                    <tr>
-                        <th>Judul</th>
-                        <th>Tanggal</th>
-                        <th>Penanggung Jawab</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($kegiatanTerbaru ?? [] as $kegiatan)
-                        <tr>
-                            <td>{{ $kegiatan->judul }}</td>
-                            <td>{{ $kegiatan->tanggal }}</td>
-                            <td>{{ $kegiatan->penanggung_jawab }}</td>
-                            <td>
-                                <span class="badge bg-{{ $kegiatan->status == 'selesai' ? 'success' : 'warning' }}">
-                                    {{ ucfirst($kegiatan->status) }}
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="text-center text-muted">Belum ada kegiatan terbaru</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+
 
     <div class="card shadow-2-strong">
         <div class="card-header bg-light">
@@ -84,10 +50,21 @@
                 @forelse($anggotaAktif ?? [] as $anggota)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
-                            <img src="{{ asset('storage/' . $anggota->foto) }}" alt="Foto" class="rounded-circle me-3" width="45" height="45">
+                            @if($anggota->foto)
+                                <img src="{{ asset('storage/' . $anggota->foto) }}" alt="Foto" class="rounded-circle me-3" width="45" height="45">
+                            @else
+                                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                                    <span class="text-white fw-bold">{{ substr($anggota->name, 0, 1) }}</span>
+                                </div>
+                            @endif
                             <div>
-                                <p class="fw-bold mb-0">{{ $anggota->nama }}</p>
-                                <p class="text-muted mb-0">{{ $anggota->jabatan }}</p>
+                                <p class="fw-bold mb-0">{{ $anggota->name }}</p>
+                                <p class="text-muted mb-0">
+                                    <span class="badge bg-{{ $anggota->role == 'admin' ? 'danger' : ($anggota->role == 'staff' ? 'info' : 'primary') }} me-1">
+                                        {{ ucfirst($anggota->role) }}
+                                    </span>
+                                    {{ $anggota->join_date ? $anggota->join_date->format('d M Y') : '' }}
+                                </p>
                             </div>
                         </div>
                         <span class="badge bg-primary rounded-pill">Aktif</span>

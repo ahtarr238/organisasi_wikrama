@@ -8,10 +8,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use  HasFactory, Notifiable;
+    use  HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -60,7 +61,7 @@ class User extends Authenticatable
 
     // public function galleries(): HasMany
     // {
-    //     return $this->hasMany(Gallery::class, 'uploaded_by');
+    //     return $this->hasMany(Galery::class, 'uploaded_by');
     // }
 
     // public function isAdmin(): bool

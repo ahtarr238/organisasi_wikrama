@@ -7,6 +7,11 @@
             padding: 48px 0;
         }
 
+        .hero-section {
+            background: linear-gradient(360deg, #ffffff 0%, #f0f8ff 60%);
+            padding: 48px 0;
+        }
+
         .misi-card {
             border-radius: 14px;
             box-shadow: 0 6px 20px rgba(31, 45, 61, 0.08);
@@ -23,7 +28,7 @@
         }
     </style>
     <!-- Hero Section -->
-    <div class="container-fluid py-5 ">
+    <div class="container-fluid py-5 hero-section ">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -36,12 +41,17 @@
                         sekolah. Mulai dari kegiatan akademis, kepemimpinan, sosial, serta hingga keagamaan. Perjalanan OSIS
                         dari masa ke masa adalah bukti nyata bahwa kebersamaan dan keberagaman akan selalu hidup di SMK
                         Wikrama kota Bogor.</p>
-                        @if (Auth::check())
-                            <span class="fw-bold text-black me-3">Selamat datang '{{ Auth::user()->name }}'</span> <br>
-                            {{-- <span class=" text-black me-3">{{ Auth::user()->birth_date }}</span>  nanti ganti jadi age, sekbid/mpr apa dan di form juga ganti --}}
-                        @else
-                            <a href="{{ route('sign-up') }}"class="btn btn-primary px-4" style="background-color: #1F3984">Daftar</a>
-                        @endif
+                        <div class="mt-3">
+                            <a href="{{ route('galery') }}" class="btn btn-outline-primary me-3">
+                                <i class="fas fa-images me-1"></i> Lihat Galeri
+                            </a>
+                            @if (Auth::check())
+                                <span class="fw-bold text-black me-3">Selamat datang '{{ Auth::user()->name }}'</span> <br>
+                                {{-- <span class=" text-black me-3">{{ Auth::user()->birth_date }}</span>  nanti ganti jadi age, sekbid/mpr apa dan di form juga ganti --}}
+                            @else
+                                <a href="{{ route('sign-up') }}"class="btn btn-primary px-4" style="background-color: #1F3984">Daftar</a>
+                            @endif
+                        </div>
 
                 </div>
                 <div class="col-md-6 ">
@@ -53,7 +63,7 @@
     </div>
 
     <!-- History Section -->
-    <div class="container-fluid py-5 " style="background-color: #d8ddef">
+    <div class="container-fluid py-5" style="background-color:#f0f8ff">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">

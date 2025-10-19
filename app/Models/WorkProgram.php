@@ -2,32 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WorkProgram extends Model
 {
-    use HasFactory;
-
-    protected $table = 'work_programs';
-
+    use SoftDeletes;
     protected $fillable = [
         'organization_id',
         'nama_program',
         'deskripsi',
         'tgl_mulai',
         'tgl_selesai',
-        'status',
         'created_by'
     ];
 
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
+    protected $dates = [
+        'tgl_mulai',
+        'tgl_selesai'
+    ];
 
-    public function organization()
+    public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

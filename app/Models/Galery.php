@@ -4,30 +4,36 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class WorkProgram extends Model
+class Galery extends Model
 {
+    use SoftDeletes;
+    
+    protected $table = 'galerries';
+    
     protected $fillable = [
-        'organization_id',
-        'nama_program',
-        'deskripsi',
-        'tgl_mulai',
-        'tgl_selesai',
-        'created_by'
+        'title',
+        'category',
+        'description',
+        'photo_url',
+        'uploaded_by',
+        'uploaded_at'
     ];
 
     protected $dates = [
-        'tgl_mulai',
-        'tgl_selesai'
+        'uploaded_at',
+        'created_at',
+        'updated_at'
     ];
 
-    public function organization(): BelongsTo
-    {
-        return $this->belongsTo(Organization::class);
-    }
+    protected $casts = [
+        'uploaded_at' => 'datetime',
+        'category' => 'string'
+    ];
 
-    public function creator(): BelongsTo
+    public function uploader(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'uploaded_by');
     }
 }

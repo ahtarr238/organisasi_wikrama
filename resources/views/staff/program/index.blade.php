@@ -7,9 +7,17 @@
     <div class="row mb-4">
         <div class="d-flex justify-content-between align-items-center mb-4 mt-3">
             <h4 class="mb-0 fw-bold text-primary">Program Kerja</h4>
-                        <a href="{{ route('staff.program.create') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus me-2"></i>Tambah Program
-            </a>
+            <div>
+                <a href="{{ route('staff.program.export') }}" class="btn btn-success btn-sm me-2">
+                    <i class="fas fa-download me-2"></i>Export CSV
+                </a>
+                <a href="{{ route('staff.program.trash') }}" class="btn btn-info btn-sm me-2">
+                    <i class="fas fa-trash me-2"></i>Data Dihapus
+                </a>
+                <a href="{{ route('staff.program.create') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus me-2"></i>Tambah Program
+                </a>
+            </div>
         </div>
 
     </div>

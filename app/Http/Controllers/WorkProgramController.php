@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\WorkProgram;
+use App\Models\User;
+use App\Exports\WorkProgramExportNew as WorkProgramExport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
-class WorkPrgoramController 
+class WorkProgramController
 {
     public function index()
     {
@@ -74,5 +77,48 @@ class WorkPrgoramController
         $program->delete();
 
         return redirect()->route('staff.program.index')->with('success', 'Program kerja berhasil dihapus!');
+    }
+
+    /**
+     * Menampilkan data yang dihapus
+     */
+    public function trash()
+    {
+        $programs = WorkProgram::onlyTrashed()->get();
+        return view('staff.program.trash', compact('programs'));
+    }
+    
+    /**
+     * Mengembalikan data yang dihapus
+     */
+    public function restore($id)
+    {
+        $program = WorkProgram::onlyTrashed()->findOrFail($id);
+        $program->restore();
+        
+        return redirect()->route('staff.program.trash')->with('success', 'Program kerja berhasil dikembalikan!');
+    }
+    
+    /**
+     * Menghapus permanen data
+     */
+    public function forceDelete($id)
+    {
+        $program = WorkProgram::onlyTrashed()->findOrFail($id);
+        $program->forceDelete();
+        
+        return redirect()->route('staff.program.trash')->with('success', 'Program kerja berhasil dihapus permanen!');
+    }
+    
+    /**
+     * Export data program kerja ke Excel
+     */
+    public function export()
+    {
+        // nama file yang akan di unduh
+        $fileName = 'data-program-kerja.xlsx';
+        
+        // proses unduh
+        return Excel::download(new WorkProgramExport, $fileName);
     }
 }

@@ -87,7 +87,7 @@
         <a href="{{route('staff.program.index')}}" class="{{ request()->is('staff/program*') ? 'active' : '' }}">
             <i class="fas fa-tasks"></i> Program Kerja
         </a>
-        <a href="" class="{{ request()->is('staff/galery*') ? 'active' : '' }}">
+        <a href="{{route('staff.galery.index')}}" class="{{ request()->is('staff/galery*') ? 'active' : '' }}">
             <i class="fas fa-image"></i> Galeri
         </a>
         <hr class="bg-light mx-3">

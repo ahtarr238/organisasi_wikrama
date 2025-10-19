@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS for modals -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         body {
             background-color: #f8f9fa;
@@ -91,20 +93,17 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="brand">Admin Organisasi</div>
-        <a href="" class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
+        <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
             <i class="fas fa-home"></i> Dashboard
         </a>
-        <a href="" class="{{ request()->is('admin/anggota*') ? 'active' : '' }}">
+        <a href="{{ route('admin.anggota.index') }}" class="{{ request()->is('admin/anggota*') ? 'active' : '' }}">
             <i class="fas fa-users"></i> Data Anggota
         </a>
-        <a href="" class="{{ request()->is('admin/kegiatan*') ? 'active' : '' }}">
+        <a href="{{ route('admin.kegiatan.index') }}" class="{{ request()->is('admin/kegiatan*') ? 'active' : '' }}">
             <i class="fas fa-calendar-check"></i> Kegiatan
         </a>
-        <a href="" class="{{ request()->is('admin/galeri*') ? 'active' : '' }}">
+        <a href="{{ route('admin.galery.index') }}" class="{{ request()->is('admin/galery*') ? 'active' : '' }}">
             <i class="fas fa-image"></i> Galeri
-        </a>
-        <a href="" class="{{ request()->is('admin/user*') ? 'active' : '' }}">
-            <i class="fas fa-user-shield"></i> Manajemen User
         </a>
         <hr class="bg-light mx-3">
         <form action="{{ route('logout') }}" method="POST" class="d-inline">
@@ -143,6 +142,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.1.0/mdb.umd.min.js"></script>
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.2.0/mdb.umd.min.js"></script>
+    <!-- Bootstrap JS for modals -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
